@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Связь{% endblock %}
+
+{% block content %}
+    <h1>Todo List</h1>
+    <div class="content_center">
+        <p>Заполни форму — сервер покажет, что ты отправил.</p>
+        <form action="{{ url_for('todo_list') }}" method="post">
+            <p>Название: <input id="name" class="float_right" type="text" name="name"></p>  
+            <p>Описание: <input id="description" class="float_right" type="text" name="description"></p>
+            <button id="button_submit" class="button_submit" type="submit">Отправить</button>
+            <div id="toast" class="toast hidden">тут будет ответ сервера </div>
+            <div id="error" class="error hidden">тут будет текст ошибки </div>
+        </form>
+{% endblock %}

@@ -1,0 +1,179 @@
+/* body{
+    background-color: bisque;text-align: center;background-image: url('https://images.wallpaperscraft.ru/image/single/priroda_ozero_les_167639_1920x1080.jpg');
+} */
+a{
+    /* background-color: var(--bgColor-accent-muted, #ddf4ff);
+    border-radius: var(--borderRadius-medium, .375rem);
+    color: var(--fgColor-link, #0969da);
+    font-family: var(--fontStack-monospace);
+    font-size: var(--text-body-size-small, .75rem);
+    padding: var(--base-size-2, .125rem) var(--base-size-6, .375rem).375rem;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    display: inline-block; */
+    color: rgb(44, 41, 41);
+    text-decoration: none;
+    font-size: 30px;
+    
+
+}
+
+h1{
+    color:red; font-style: italic;
+}
+.red_link {
+    color:red;
+}
+a.red_link {
+    color:red;
+}
+p{
+    text-align: center;
+}
+
+
+
+.border{
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 2px;
+    border-color: crimson;
+
+}
+a.border{
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 2px;
+    
+    border-color: rgb(188, 193, 216);
+
+}
+.red_link.border{
+    border-width: 5px;
+}
+p .border.green {
+    border-color: aqua;
+}
+#id123{
+    font-weight: bold;
+}
+
+.head {
+
+    padding: 15px;
+    text-align: center;
+    color: #000000;
+    background-color:#dadada;    
+    border-bottom: 3px solid #9d9dbd;
+    font-size: 30px;
+}
+
+.page {
+    display: flex;
+
+}
+
+.menu {
+    width: 300px;
+    padding: 15px;
+    background-color: #dadada;
+    border: 2px solid #ccc;
+    
+    border-color: rgb(188, 193, 216);
+}
+
+.menu ul {
+    list-style: none;
+    padding-left: 0;
+    
+}
+
+.menu li {   
+    padding: 8px 0;
+    /* background-color: #fbff21; */
+    font-size: 1.25rem;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+}
+
+.menu li svg{
+    width: 25px;
+    height: 25px;
+    fill: #5a5a5a;
+}
+.menu a.active{
+    background-color: #ffffff;
+}
+.menu li:hover {
+    background-color: #ffffff;
+}
+
+
+
+.content {
+    flex: 1;
+    padding: 150px;
+    text-align: center;
+    font-size: 30px;
+}
+.content_center{
+    text-align: left;
+    font-size: 30px;
+    width: 600px;
+    margin: 0 auto;
+}
+.content_center p{
+    text-align: left;
+
+}
+.content_center .button_submit{
+    font-size: 30px;
+    margin: 0 auto;
+    display: block;
+    clear: both;
+}
+.content_center .float_right{
+    float: right;
+}
+.content img {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+.footer {
+    border-top: 3px solid #9d9dbd;
+    padding: 15px;
+    text-align: center;
+    color: #000000;
+    background-color:#dadada;
+    font-size: 30px;
+}
+.page{
+    background-color:  #dadada;
+}
+
+.hidden {
+    display: none;
+}
+
+.error {
+    border: 2px solid #c62828;
+    background-color: #ffebee;
+    color: #c62828;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 24px;
+}
+
+.toast {
+    border: 2px solid #2e7d32;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 24px;
+}
