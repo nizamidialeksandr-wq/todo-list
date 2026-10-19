@@ -15,37 +15,14 @@
                         <a class="{% if request.path == url_for('home') %}active{% endif %}" href="{{ url_for('home') }}">главная</a>
                     </li>
                     <li>
-                        <img src="https://cdn-icons-png.flaticon.com/128/16528/16528946.png" loading="lazy" alt="Связь" title="Связь" width="30" height="30">
-                        <a class="{% if request.path == url_for('contact') %}active{% endif %}" href="{{ url_for('contact') }}">связь</a>
-                    </li>
-                    <li>
-                        <img src="https://cdn-icons-png.flaticon.com/128/17/17004.png" loading="lazy" alt="Пользователь" title="Пользователь" width="30" height="30">
-                        <a class="{% if request.path == url_for('about') %}active{% endif %}" href="{{ url_for('about') }}">о себе</a>
-                    </li>
-                    <li>
-                        <img src="https://cdn-icons-png.flaticon.com/128/13528/13528397.png" loading="lazy" alt="Факты" title="Факты" width="30" height="30">
-                        <a class="{% if request.path == url_for('facts') %}active{% endif %}" href="{{ url_for('facts') }}">факты</a>
-                    </li>
-                    <li>
-                        <img src="https://cdn-icons-png.flaticon.com/128/8893/8893003.png" loading="lazy" alt="Обед" title="Обед" width="30" height="30">
-                        <a class="{% if request.path == url_for('eat') %}active{% endif %}" href="{{ url_for('eat') }}">твоя любимая еда</a>
-                    </li>
-                    <li>
-                        <img src="https://cdn-icons-png.flaticon.com/128/8893/8893003.png" loading="lazy" alt="Обед" title="Обед" width="30" height="30">
-                        <a class="{% if request.path == url_for('test') %}active{% endif %}" href="{{ url_for('test') }}">тест</a>
-                    </li>
-                    <li>
-                        <img src="https://cdn-icons-png.flaticon.com/128/8893/8893003.png" loading="lazy" alt="Обед" title="Обед" width="30" height="30">
-                        <a class="{% if request.path == url_for('orders') %}active{% endif %}" href="{{ url_for('orders') }}">база данных</a>
+                        <img src="https://cdn-icons-png.flaticon.com/128/16528/16528946.png" loading="lazy" alt="Todo List" title="Todo List" width="30" height="30">
+                        <a class="{% if request.path == url_for('todo_list') %}active{% endif %}" href="{{ url_for('todo_list') }}">Todo List</a>
                     </li>
                 </ul>
             </div>
-            <div class="content">
-                {% block content %}{% endblock %}
-            </div>
+            <div class="content">{% block content %}{% endblock %}</div>
         </div>
         <div class="footer">здесь будет подвал</div>
-
         <script src="{{ url_for('static', filename='script.js') }}"></script>
     </body>
 </html>
