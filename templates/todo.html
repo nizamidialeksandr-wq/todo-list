@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+    <div class="todo-layout">
+        <h2>Мои списки</h2>
+        
+        {% for item in all_lists %}
+            <a href="{{ url_for('todo', list_id=item['id']) }}" class="sidebar-item {% if item['id'] == current_list['id'] %}active{% endif %}">
+                <div class="sidebar-title">{{ item['name'] }}</div>
+                <div class="sidebar-desc">{{ item['description'] }}</div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="main-content">
+        <h1>{{ current_list['name'] }}</h1>
+        <p style="text-align: left; color: #666;">{{ current_list['description'] }}</p>
+        
+        <hr style="margin: 20px 0; border: 1px solid #ccc;">
+        
+        <p style="text-align: left; font-style: italic;">Список задач пока пуст...</p>
+    </div>
+{% endblock %}

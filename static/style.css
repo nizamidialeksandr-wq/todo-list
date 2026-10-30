@@ -177,3 +177,58 @@ p .border.green {
     padding: 10px;
     font-size: 24px;
 }
+
+/* Для страницы todo */
+.todo-layout {
+    display: flex;
+    gap: 20px;
+    text-align: left;
+}
+
+.sidebar {
+    width: 300px;
+    border-right: 2px solid #ccc;
+    padding-right: 20px;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.sidebar-item {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-decoration: none;
+    color: #333;
+    transition: 0.2s;
+}
+
+.sidebar-item:hover {
+    background-color: #e9e9e9;
+}
+
+.sidebar-item.active {
+    border-color: #9d9dbd;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.sidebar-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.sidebar-desc {
+    font-size: 14px;
+    color: #777;
+    font-style: italic;
+}
+
+.main-content {
+    flex: 1;
+}
