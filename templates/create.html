@@ -8,8 +8,15 @@
         <form action="{{ url_for('create') }}" method="post">
             <p>Название: <input id="name" class="float_right" type="text" name="name"></p>  
             <p>Описание: <input id="description" class="float_right" type="text" name="description"></p>
-            <button id="button_submit" class="button_submit" type="submit">создать</button>
-            <div id="toast" class="toast hidden">тут будет ответ сервера </div>
-            <div id="error" class="error hidden">тут будет текст ошибки </div>
+            
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <button id="button_submit" class="button_submit" type="submit">создать</button>
+                
+                <button type="button" class="button_submit" onclick="window.location.href='{{ url_for('last_todo') }}';">Мои списки</button>
+            </div>
+
+            <div id="toast" class="toast hidden">тут будет ответ сервера</div>
+            <div id="error" class="error hidden">тут будет текст ошибки</div>
         </form>
+    </div>
 {% endblock %}
