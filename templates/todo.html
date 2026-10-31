@@ -50,7 +50,7 @@
                 {% for task in tasks %}
                     <li style="font-size: 24px; margin-bottom: 10px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 5px;">
                         <!-- Чекбокс -->
-                        <input type="checkbox" style="width: 20px; height: 20px; margin-right: 10px; vertical-align: middle;">
+                        <input type="checkbox" {% if task['is_done'] %}checked{% endif %}  style="width: 20px; height: 20px; margin-right: 10px; vertical-align: middle;">
                         <span style="vertical-align: middle;">{{ task['text'] }}</span>
                     </li>
                 {% else %}
