@@ -151,3 +151,18 @@ def api():
         'is_done' : 'False'
     }
     return data
+
+@app.route("/toggle_task/<int:task_id>", methods=["POST"])
+def toggle_task(task_id):
+    conn = sqlite3.connect("database.db")
+    
+
+    task = conn.execute("SELECT is_done FROM tasks WHERE id = ?", (task_id,)).fetchone()
+    
+    if task:
+        new_status = 0 if task[0] == 1 else 1
+        conn.execute("UPDATE tasks SET is_done = ? WHERE id = ?", (new_status, task_id))
+        conn.commit()
+        
+    conn.close()
+    return "", 204  

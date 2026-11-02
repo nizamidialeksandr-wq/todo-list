@@ -48,10 +48,18 @@
             <!-- ВЫВОД СОХРАНЕННЫХ ЗАДАЧ -->
             <ul style="list-style-type: none; padding: 0; text-align: left;">
                 {% for task in tasks %}
-                    <li style="font-size: 24px; margin-bottom: 10px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 5px;">
-                        <!-- Чекбокс -->
-                        <input type="checkbox" {% if task['is_done'] %}checked{% endif %}  style="width: 20px; height: 20px; margin-right: 10px; vertical-align: middle;">
-                        <span style="vertical-align: middle;">{{ task['text'] }}</span>
+                    <li style="font-size: 24px; margin-bottom: 10px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 5px; {% if task['is_done'] %}opacity: 0.6;{% endif %}">
+                        
+                        <!-- Чекбокс с ID и событием onchange -->
+                        <input type="checkbox" id="task-{{ task['id'] }}" 
+                               {% if task['is_done'] %}checked{% endif %} 
+                               onchange="toggleTask({{ task['id'] }})"
+                               style="width: 20px; height: 20px; margin-right: 10px; vertical-align: middle; cursor: pointer;">
+                        
+                        <!-- Текст задачи (зачеркивается, если выполнена) -->
+                        <span style="vertical-align: middle; {% if task['is_done'] %}text-decoration: line-through;{% endif %}">
+                            {{ task['text'] }}
+                        </span>
                     </li>
                 {% else %}
                     <p style="font-style: italic; color: #777;">Список задач пока пуст...</p>
@@ -59,4 +67,18 @@
             </ul>
         </div>
     </div>
+
+    <!-- СКРИПТ ДЛЯ СОХРАНЕНИЯ ГАЛОЧКИ -->
+    <script>
+        function toggleTask(taskId) {
+            fetch(`/toggle_task/${taskId}`, {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    // Если сервер сохранил, перезагружаем страницу, чтобы применить стили (зачеркивание)
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
 {% endblock %}
