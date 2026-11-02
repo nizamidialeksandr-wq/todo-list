@@ -5,15 +5,15 @@
 {% block content %}
     <h1>Обращения</h1>
 
-    {% if orders %}
-        <p>Всего: {{ orders|length }}</p>
+    {% if lists %}
+        <p>Всего: {{ lists|length }}</p>
         <table class="orders">
             <tr>
                 <th>Название</th>
                 <th>Описание</th>
 
             </tr>
-            {% for m in orders %}
+            {% for m in lists %}
                 <tr>
                     <td>{{ m["name"] }}</td>
                     <td>{{ m["description"] }}</td>

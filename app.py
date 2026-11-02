@@ -9,7 +9,7 @@ def init_db():
     conn = sqlite3.connect("database.db")
     # Создаем таблицу списков
     conn.execute("""
-        CREATE TABLE IF NOT EXISTS orders (
+        CREATE TABLE IF NOT EXISTS lists (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             description TEXT NOT NULL
@@ -45,7 +45,7 @@ def create():
 
         conn = sqlite3.connect("database.db")
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO orders (name, description) VALUES (?, ?)", (name, description))
+        cursor.execute("INSERT INTO lists (name, description) VALUES (?, ?)", (name, description))
         conn.commit()
         
         # Получаем ID только что созданного списка
@@ -61,10 +61,10 @@ def todo(list_id):
     conn.row_factory = sqlite3.Row
     
     # 1. Получаем текущий список
-    current_list = conn.execute("SELECT * FROM orders WHERE id = ?", (list_id,)).fetchone()
+    current_list = conn.execute("SELECT * FROM lists WHERE id = ?", (list_id,)).fetchone()
     
     # 2. Получаем ВСЕ списки для левого меню
-    all_lists = conn.execute("SELECT * FROM orders").fetchall()
+    all_lists = conn.execute("SELECT * FROM lists").fetchall()
     
     # 3. ПОЛУЧАЕМ ЗАДАЧИ для этого списка
     tasks = conn.execute("SELECT * FROM tasks WHERE list_id = ?", (list_id,)).fetchall()
@@ -99,12 +99,12 @@ def delete_list(list_id):
     conn.row_factory = sqlite3.Row  # <--- ВОТ ЭТА СТРОЧКА ИСПРАВЛЯЕТ ОШИБКУ
     
     # Удаляем сам список и его задачи
-    conn.execute("DELETE FROM orders WHERE id = ?", (list_id,))
+    conn.execute("DELETE FROM lists WHERE id = ?", (list_id,))
     conn.execute("DELETE FROM tasks WHERE list_id = ?", (list_id,))
     conn.commit()
     
     # Проверяем, остались ли еще списки в базе
-    remaining = conn.execute("SELECT id FROM orders ORDER BY id DESC LIMIT 1").fetchone()
+    remaining = conn.execute("SELECT id FROM lists ORDER BY id DESC LIMIT 1").fetchone()
     conn.close()
     
     if remaining:
@@ -125,7 +125,7 @@ def last_todo():
     conn = sqlite3.connect("database.db")
     conn.row_factory = sqlite3.Row
     # Ищем самый последний созданный список
-    last = conn.execute("SELECT id FROM orders ORDER BY id DESC LIMIT 1").fetchone()
+    last = conn.execute("SELECT id FROM lists ORDER BY id DESC LIMIT 1").fetchone()
     conn.close()
     
     if last:
@@ -133,13 +133,13 @@ def last_todo():
     else:
         return redirect(url_for("create"))
 
-@app.route("/orders")
-def orders():
+@app.route("/lists")
+def lists():
     conn = sqlite3.connect("database.db")
     conn.row_factory = sqlite3.Row
-    orders = conn.execute("SELECT * FROM orders").fetchall()
+    lists = conn.execute("SELECT * FROM lists").fetchall()
     conn.close()
-    return render_template("orders.html", orders=orders)
+    return render_template("lists.html", listss=lists)
 
 @app.route("/api/items")
 def api():
