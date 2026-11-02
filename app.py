@@ -166,3 +166,16 @@ def toggle_task(task_id):
         
     conn.close()
     return "", 204  
+
+
+@app.route("/delete_task/<int:task_id>", methods=["POST"])
+def delete_task(task_id):
+    conn = sqlite3.connect("database.db")
+
+
+    conn.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
+    conn.commit()
+
+    return "", 204
+
+

@@ -46,10 +46,20 @@
             <hr style="margin: 20px 0; border: 1px solid #ccc;">
 
             <!-- ВЫВОД СОХРАНЕННЫХ ЗАДАЧ -->
+             
             <ul style="list-style-type: none; padding: 0; text-align: left;">
                 {% for task in tasks %}
                     <li style="font-size: 24px; margin-bottom: 10px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 5px; {% if task['is_done'] %}opacity: 0.6;{% endif %}">
                         
+                        <form action="{{ url_for('delete_task', task_id=task['id']) }}" method="POST" style="margin: 0;">
+                            <button type="submit" title="Удалить задачу" style="background: none; border: none; color: #c62828; font-size: 24px; cursor: pointer; font-weight: bold; padding: 5px;">
+                                &times;
+                            </button>
+                        </form>
+
+
+
+
                         <!-- Чекбокс с ID и событием onchange -->
                         <input type="checkbox" id="task-{{ task['id'] }}" 
                                {% if task['is_done'] %}checked{% endif %} 
@@ -68,14 +78,12 @@
         </div>
     </div>
 
-    <!-- СКРИПТ ДЛЯ СОХРАНЕНИЯ ГАЛОЧКИ -->
     <script>
         function toggleTask(taskId) {
             fetch(`/toggle_task/${taskId}`, {
                 method: 'POST'
             }).then(response => {
                 if (response.ok) {
-                    // Если сервер сохранил, перезагружаем страницу, чтобы применить стили (зачеркивание)
                     window.location.reload();
                 }
             });
