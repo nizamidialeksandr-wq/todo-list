@@ -29,10 +29,12 @@ def init_db():
 
 
 init_db()
-
-
 @app.route("/")
 def home():
+    return render_template("home.html")
+
+@app.route("/lists")
+def lists():
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
     all_lists = conn.execute("SELECT * FROM lists ORDER BY id DESC").fetchall()
