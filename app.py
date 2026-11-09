@@ -28,12 +28,9 @@ def init_db():
     conn.close()
 
 
-init_db()
-@app.route("/")
-def home():
-    return render_template("home.html")
 
-@app.route("/lists")
+
+@app.route("/")
 def lists():
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
@@ -76,7 +73,7 @@ def todo(list_id):
     conn.close()
 
     if current_list is None:
-        return redirect(url_for("home"))
+        return redirect(url_for("lists"))
 
     return render_template("todo.html", current_list=current_list, tasks=tasks)
 
@@ -110,7 +107,7 @@ def toggle_task(task_id):
         list_id = task[1]
     else:
         conn.close()
-        return redirect(url_for("home"))
+        return redirect(url_for("lists"))
     conn.close()
     return redirect(url_for("todo", list_id=list_id))
 
@@ -128,7 +125,7 @@ def delete_task(task_id):
         conn.close()
         return redirect(url_for("todo", list_id=list_id))
     conn.close()
-    return redirect(url_for("home"))
+    return redirect(url_for("lists"))
 
 
 @app.route("/delete_list/<int:list_id>", methods=["POST"])
@@ -138,12 +135,12 @@ def delete_list(list_id):
     conn.execute("DELETE FROM tasks WHERE list_id = ?", (list_id,))
     conn.commit()
     conn.close()
-    return redirect(url_for("home"))
+    return redirect(url_for("lists"))
 
 
 @app.route("/last_todo")
 def last_todo():
-    return redirect(url_for("home"))
+    return redirect(url_for("lists"))
 
 
 @app.route("/api/items")
