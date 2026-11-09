@@ -1,92 +1,58 @@
 {% extends "base.html" %}
-
-{% block title %}Todo List123{% endblock %}
+{% block title %}{{ current_list['name'] }}{% endblock %}
 
 {% block content %}
-    <div class="todo-layout">
-        <!-- ЛЕВОЕ МЕНЮ СО СПИСКАМИ -->
-        <div class="sidebar">
-            <h2>Мои списки</h2>
-            
-            {% for item in all_lists %}
-                <!-- Обертка для списка и кнопки удаления -->
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 10px;">
-                    
-                    <!-- Ссылка на список -->
-                    <a href="{{ url_for('todo', list_id=item['id']) }}" class="sidebar-item {% if item['id'] == current_list['id'] %}active{% endif %}" style="flex: 1; margin-bottom: 0;">
-                        <div class="sidebar-title">{{ item['name'] }}</div>
-                        <div class="sidebar-desc">{{ item['description'] }}</div>
-                    </a>
-                    
-                    <!-- Кнопка удаления (крестик) -->
-                    <form action="{{ url_for('delete_list', list_id=item['id']) }}" method="POST" style="margin: 0;">
-                        <button type="submit" title="Удалить список" style="background: none; border: none; color: #c62828; font-size: 24px; cursor: pointer; font-weight: bold; padding: 5px;">
-                            &times;
-                        </button>
-                    </form>
-                    
-                </div>
-            {% endfor %}
-        </div>
+    <p>
+        <a href="{{ url_for('home') }}">← ко всем спискам</a>
+    </p>
 
-        <!-- ПРАВАЯ ЧАСТЬ (САМ СПИСОК ЗАДАЧ) -->
-        <div class="main-content">
-            <h1>{{ current_list['name'] }}</h1>
-            <p style="text-align: left; color: #666;">{{ current_list['description'] }}</p>
-            
-            <hr style="margin: 20px 0; border: 1px solid #ccc;">
-            
-            <!-- ФОРМА ДЛЯ ДОБАВЛЕНИЯ ЗАДАЧ -->
-            <form action="{{ url_for('add_task', list_id=current_list['id']) }}" method="POST" style="margin-top: 20px;">
-                <textarea name="task_text" placeholder="Напишите задачу..." style="width: 95%; height: 120px; padding: 15px; font-size: 22px; border: 1px solid #ccc; border-radius: 8px; resize: vertical; font-family: inherit;"></textarea>
-                <br>
-                <button type="submit" style="margin-top: 10px; font-size: 20px; padding: 10px 20px; cursor: pointer;">Сохранить</button>
-            </form>
+    <h1>{{ current_list['name'] }}</h1>
+    <p style="color:#666;">{{ current_list['description'] }}</p>
 
-            <hr style="margin: 20px 0; border: 1px solid #ccc;">
+    <hr>
 
-            <!-- ВЫВОД СОХРАНЕННЫХ ЗАДАЧ -->
-             
-            <ul style="list-style-type: none; padding: 0; text-align: left;">
-                {% for task in tasks %}
-                    <li style="font-size: 24px; margin-bottom: 10px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 5px; {% if task['is_done'] %}opacity: 0.6;{% endif %}">
-                        
-                        <form action="{{ url_for('delete_task', task_id=task['id']) }}" method="POST" style="margin: 0;">
-                            <button type="submit" title="Удалить задачу" style="background: none; border: none; color: #c62828; font-size: 24px; cursor: pointer; font-weight: bold; padding: 5px;">
-                                &times;
-                            </button>
-                        </form>
+    <form action="{{ url_for('add_task', list_id=current_list['id']) }}" method="POST">
+        <textarea name="task_text" placeholder="Напишите задачу..."
+                  style="width:95%; height:100px; padding:12px; font-size:18px;
+                         border:1px solid #ccc; border-radius:8px; resize:vertical;"></textarea>
+        <br>
+        <button type="submit" style="margin-top:10px; font-size:18px; padding:8px 18px;">
+            Сохранить
+        </button>
+    </form>
 
+    <hr>
 
+    <ul style="list-style:none; padding:0; text-align:left;">
+        {% for task in tasks %}
+            <li style="display:flex; align-items:center; gap:10px;
+                       font-size:20px; margin-bottom:10px; padding:10px;
+                       background:#fff; border:1px solid #eee; border-radius:6px;
+                       {% if task['is_done'] %}opacity:0.6;{% endif %}">
 
+                <form action="{{ url_for('toggle_task', task_id=task['id']) }}"
+                      method="POST" style="margin:0;">
+                    <button type="submit" title="Переключить"
+                            style="background:none; border:none; font-size:22px; cursor:pointer;">
+                        {% if task['is_done'] %}☑{% else %}☐{% endif %}
+                    </button>
+                </form>
 
-                        <!-- Чекбокс с ID и событием onchange -->
-                        <input type="checkbox" id="task-{{ task['id'] }}" 
-                               {% if task['is_done'] %}checked{% endif %} 
-                               onchange="toggleTask({{ task['id'] }})"
-                               style="width: 20px; height: 20px; margin-right: 10px; vertical-align: middle; cursor: pointer;">
-                        
-                        <!-- Текст задачи (зачеркивается, если выполнена) -->
-                        <span style="vertical-align: middle; {% if task['is_done'] %}text-decoration: line-through;{% endif %}">
-                            {{ task['text'] }}
-                        </span>
-                    </li>
-                {% else %}
-                    <p style="font-style: italic; color: #777;">Список задач пока пуст...</p>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+                <span style="flex:1; {% if task['is_done'] %}text-decoration:line-through;{% endif %}">
+                    {{ task['text'] }}
+                </span>
 
-    <script>
-        function toggleTask(taskId) {
-            fetch(`/toggle_task/${taskId}`, {
-                method: 'POST'
-            }).then(response => {
-                if (response.ok) {
-                    window.location.reload();
-                }
-            });
-        }
-    </script>
+                <form action="{{ url_for('delete_task', task_id=task['id']) }}"
+                      method="POST" style="margin:0;">
+                    <button type="submit" title="Удалить задачу"
+                            style="background:none; border:none; color:#c62828;
+                                   font-size:22px; cursor:pointer; font-weight:bold;">
+                        &times;
+                    </button>
+                </form>
+            </li>
+        {% else %}
+            <p style="font-style:italic; color:#777;">Задач пока нет.</p>
+        {% endfor %}
+    </ul>
 {% endblock %}
